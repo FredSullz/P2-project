@@ -1,10 +1,11 @@
 import cv2
 
-cap = cv2.VideoCapture(1)
+cap = cv2.VideoCapture(0)
 cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)
 cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
+key = 1
 
-while True:
+while(key != 27):
     _, frame = cap.read()
     hsv_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
     height = 720
@@ -40,8 +41,6 @@ while True:
 
     cv2.imshow("Frame", frame)
     key = cv2.waitKey(1)
-    if key == 27:
-        break
 
 cap.release()
 cv2.destroyAllWindows()
