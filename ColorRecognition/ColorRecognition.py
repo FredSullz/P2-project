@@ -2,7 +2,7 @@ import cv2
 from subprocess import call
 import time as t
 
-cap = cv2.VideoCapture(index = 1)
+cap = cv2.VideoCapture(index = 0)
 cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
 cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
 key = None
