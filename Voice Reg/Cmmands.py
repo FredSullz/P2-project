@@ -10,3 +10,4 @@ while True:
         print("damn its 1")
     else:
         print("nope no 1")
+#start her fra
