@@ -1,6 +1,6 @@
 import cv2
 from subprocess import call
-import time
+import time as t
 
 cap = cv2.VideoCapture(index = 1)
 cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
@@ -46,8 +46,7 @@ while(key != 27):
             giveItem()
             bluetime = 0
             
-        def open_file_py():
-            call(["python", "If Blue.py"])
+        
         open_file_py()
         
         
@@ -55,7 +54,8 @@ while(key != 27):
         glove = False
         bluetime = 0
         
-        
+    def open_file_py():
+            call(["python", "If Blue.py"])    
         
     def giveItem():
         #This will work as a function for sending information to the Raspberry PI.
