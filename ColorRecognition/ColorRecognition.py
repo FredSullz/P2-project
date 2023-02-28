@@ -38,9 +38,21 @@ while(key != 27):
         if bluetime > 100:
             bluetime = 0
             open_file_py()
+        
+        
     else:
         glove = False
         bluetime = 0
+<<<<<<< HEAD
+=======
+        
+    def open_file_py():
+            call(["python", "ColorRecognition\If_Blue.py"])    
+        
+    def giveItem():
+        #This will work as a function for sending information to the Raspberry PI.
+        cv2.putText(frame, "Item Given!",(1170,100),0, 1,(255, 0, 0), 2)
+>>>>>>> 8969b74430e9eefac8630f8305266e54e15280b4
 
 
     #Drawing "UI"
