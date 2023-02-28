@@ -2,12 +2,22 @@ import cv2
 from subprocess import call
 import time as t
 
-cap = cv2.VideoCapture(index = 1)
+cap = cv2.VideoCapture(index = 0)
 cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
 cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
+
+threshArray = [180, 240]
 key = None
 glove = False
 bluetime = 0
+
+#x = input("Do you want to calibrate? If not, default values are used (y/n)")
+threshArray[0] = int(input("What is your lower threshold?"))
+threshArray[1] = int(input("What is your upper threshold?"))
+
+#Defining functions
+def open_file_py():
+            call(["python", "If_Blue.py"])
 
 while(key != 27):
     _, frame = cap.read()
@@ -19,47 +29,25 @@ while(key != 27):
     cy = int(width / 2)
 
     pixel_center = hsv_frame[cx, cy]
-    hue_value = pixel_center[0]
+    hue_value = pixel_center[0] * 2
 
-    #Defining the colors
-    color = "Undefined"
-    if hue_value < 5:
-        color = "RED"
-    elif hue_value < 22:
-        color = "ORANGE"
-    elif hue_value < 33:
-        color = "YELLOW"
-    elif hue_value < 78:
-        color = "GREEN"
-    elif hue_value < 131:
-        color = "BLUE"
-    elif hue_value < 170:
-        color = "VIOLET"
-    else:
-        color = "RED"
-    
     #Checking if the camera is pointed at a glove
-    if color == "BLUE":
+    if hue_value in range(threshArray[0],threshArray[1]):
         glove = True
         bluetime += 1
         if bluetime > 100:
-            giveItem()
             bluetime = 0
             open_file_py()
     else:
         glove = False
         bluetime = 0
-        
-    def open_file_py():
-            call(["python", "If Blue.py"])    
 
 
     #Drawing "UI"
     pixel_center_bgr = frame[cx, cy]
     b, g, r = int(pixel_center_bgr[0]), int(pixel_center_bgr[1]), int(pixel_center_bgr[2])
-    cv2.putText(frame, color, (10,50), 0, 1, (b, g, r), 2)
-    cv2.putText(frame, str(glove),(1170,50),0, 1,(255, 0, 0), 2)
-    cv2.putText(frame, str(bluetime),(1170,200),0, 1,(255, 0, 0), 2)
+    cv2.putText(frame, str(hue_value), (10,50), 0, 1, (b, g, r), 2)
+    cv2.putText(frame, str(glove),(10,300),0, 1,(255, 0, 0), 2)
     cv2.circle(frame, (cy, cx), 5, (25, 25, 25), 3)
 
     cv2.imshow("Frame", frame)
