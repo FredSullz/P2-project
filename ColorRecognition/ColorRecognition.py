@@ -1,8 +1,10 @@
 import cv2
+from subprocess import call
+import time
 
-cap = cv2.VideoCapture(1)
-cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)
-cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
+cap = cv2.VideoCapture(index = 1)
+cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
+cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
 key = None
 glove = False
 bluetime = 0
@@ -10,8 +12,8 @@ bluetime = 0
 while(key != 27):
     _, frame = cap.read()
     hsv_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV) #Converting RGB values to HSV values
-    height = 720
-    width = 1280
+    height = 480
+    width = 640
 
     cx = int(height / 2)
     cy = int(width / 2)
@@ -43,9 +45,17 @@ while(key != 27):
         if bluetime > 100:
             giveItem()
             bluetime = 0
+            
+        def open_file_py():
+            call(["python", "If Blue.py"])
+        open_file_py()
+        
+        
     else:
         glove = False
         bluetime = 0
+        
+        
         
     def giveItem():
         #This will work as a function for sending information to the Raspberry PI.
