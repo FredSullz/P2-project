@@ -45,21 +45,13 @@ while(key != 27):
         if bluetime > 100:
             giveItem()
             bluetime = 0
-            
-        
-        open_file_py()
-        
-        
+            open_file_py()
     else:
         glove = False
         bluetime = 0
         
     def open_file_py():
             call(["python", "If Blue.py"])    
-        
-    def giveItem():
-        #This will work as a function for sending information to the Raspberry PI.
-        cv2.putText(frame, "Item Given!",(1170,100),0, 1,(255, 0, 0), 2)
 
 
     #Drawing "UI"
