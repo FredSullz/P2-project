@@ -29,7 +29,7 @@ while(key != 27):
 	cv2.putText(frame, str(hue_value), (10,50), 0, 1, (b, g, r), 2)
 	cv2.circle(frame, (cy, cx), 5, (25, 25, 25), 3)
 	
-	cv2.imshow("Frame", frame)
+	cv2.imshow("Calibration", frame)
 	key = cv2.waitKey(1)
 
 #Closing the window(s)
