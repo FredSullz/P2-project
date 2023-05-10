@@ -2,10 +2,10 @@ import cv2
 import time as t
 from pymycobot.mycobot import MyCobot
 
-mc = MyCobot('/dev/ttyAMA0',115200)
+mc = MyCobot('COM9',115200)
 mc.send_angles([0,0,0,0,0,0],0)
 
-cap = cv2.VideoCapture(index = 0)
+cap = cv2.VideoCapture(index = 1)
 cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
 cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
 
@@ -14,13 +14,49 @@ key = None
 glove = False
 bluetime = 0
 
-x = input("Do you want to calibrate? If not, default values are used (y/n)")
-threshArray[0] = int(input("What is your lower threshold?"))
-threshArray[1] = int(input("What is your upper threshold?"))
+# ---- Defining points ----
+point0 = [0,0,0,0,0,0]
+point1 = [90,0,0,0,0,0]
+point2 = [0,0,0,0,0,0]
+point3 = [0,0,0,0,0,0]
+point4 = [0,0,0,0,0,0]
+point5 = [0,0,0,0,0,0]
 
-#Defining functions
+# ---- Defining functions ----
+def calibrate():
+    lowerThreshold = -1 #Initial value chosen so while loop always returns true at least once
+    upperThreshold = -1
+    inp = str(input("Do you want to calibrate? If not, default values are used (y/n)"))
+    if inp == "y":
+        while lowerThreshold < 0 or lowerThreshold > 360:
+            lowerThreshold = int(input("What is your lower threshold?"))
+            threshArray[0] = lowerThreshold
+            if lowerThreshold < 0 or lowerThreshold > 360:
+                print("Value must be between 0 and 360, try again")
+        while upperThreshold < 0 or upperThreshold > 360:
+            upperThreshold = int(input("What is your upper threshold?"))
+            t.sleep(1)
+            threshArray[1] = upperThreshold
+            if upperThreshold < 0 or upperThreshold > 360:
+                print("Value must be between 0 and 360, try again")
+                t.sleep(1)
+        t.sleep(1)
+        print(f"Calibration done. Your new thresholds are: {threshArray}")
 
-#Main loop
+    elif inp == "n":
+        print(f"Using default values: {threshArray}")
+
+    else:
+        print("invalid input, must be y or n. Try again")
+        t.sleep(1)
+        calibrate()
+
+def goToPoint(point, speed):
+    mc.send_angles(point,speed)
+
+# ---- Main loop ----
+calibrate()
+
 while(key != 27):
     _, frame = cap.read()
     hsv_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV) #Converting RGB values to HSV values
@@ -39,9 +75,9 @@ while(key != 27):
         bluetime += 1
         if bluetime > 100:
             bluetime = 0
-            mc.send_angles([100,0,0,0,0,0],0)
-            t.sleep(1)
-            mc.send_angles([0,0,0,0,0,0],0)
+            goToPoint(point1, 30)
+            t.sleep(10)
+            goToPoint(point0, 30)
     else:
         glove = False
         bluetime = 0
