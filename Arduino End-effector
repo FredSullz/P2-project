@@ -1,0 +1,43 @@
+//the magnet must be hanging straight down when placed on the servo motor, otherwise it won't work
+
+#include <Servo.h>
+
+Servo myservo;  // create servo object to control a servo
+// twelve servo objects can be created on most boards
+
+int pos = 0;    // variable to store the servo position
+
+void setup() {
+  Serial.begin(9600); //starts the serial logging, which means the monitor works
+  myservo.attach(9);  // attaches the servo on pin 9 to the servo object
+}
+
+void loop() {
+  Serial.println(pos); //prints the possition
+ 
+  while (Serial.available() == 0) {
+  } //while loop that checks if there is a input in the monitor
+
+  int inputValue = Serial.parseInt(); //convert a switch value to a working int in the monitor
+  
+  //this is the switch statement that checks the input for either 1 or 2
+  switch (inputValue) {
+    case 1: //pushes the magnet out
+      Serial.println(1);
+      pos = 180;
+      myservo.write(pos);
+      delay(15);
+      break;
+
+    case 2: //pulls the magnet in
+      Serial.println(2);
+      pos = -270;
+      myservo.write(pos);
+      delay(15);
+      break;
+  
+    default: //prints that its waiting for inputs
+      Serial.print("waiting for input...");
+
+  } 
+}
