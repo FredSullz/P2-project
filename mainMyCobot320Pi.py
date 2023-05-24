@@ -53,13 +53,13 @@ robotColor = "black"
 speed = 33
 
 #connecting to the robot is done differently depending on what robot is being used and how it is being used
-if computerInUse == True and robotColor == "black":
-    mc = MyCobot('COM11',115200)
-elif computerInUse == True and robotColor == "white":
-    mc = MyCobot('COM9',115200)
-elif computerInUse == False:
+if computerInUse:
+    if robotColor == "white":
+        mc = MyCobot('COM9',115200)
+    else:
+        mc = MyCobot('COM11',115200)
+else:
     mc = MyCobot('/dev/ttyAMA0',115200)
-
 """
 
 CORRECTION SETUP
