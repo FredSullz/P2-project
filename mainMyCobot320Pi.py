@@ -164,10 +164,6 @@ def pickup(word):
         mc.send_angles(point0,speed)
         print("Keyword not in keywordArray")
 
-#function that sends end effector to desired point
-def goToPoint(point, speed):
-    mc.send_angles(point,speed)
-
 #function used to calibrate HSV values used for color detection
 def calibrateColor():
     lowerThreshold = -1 #Initial value chosen so while loop always returns true at least once
