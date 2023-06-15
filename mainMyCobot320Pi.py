@@ -162,7 +162,8 @@ def pickup(word):
         atDropoff = True
     else:
         mc.send_angles(point0,speed)
-        print("Keyword not in keywordArray")
+        word = inp("Keyword not in keywordArray. Please type word")
+        pickup(word)
 
 #function used to calibrate HSV values used for color detection
 def calibrateColor():
