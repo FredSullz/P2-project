@@ -161,7 +161,6 @@ def pickup(word):
         t.sleep(7)
         atDropoff = True
     else:
-        mc.send_angles(point0,speed)
         word = inp("Keyword not in keywordArray. Please type word")
         pickup(word)
 
