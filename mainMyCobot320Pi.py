@@ -161,7 +161,7 @@ def pickup(word):
         t.sleep(7)
         atDropoff = True
     else:
-        word = inp("Keyword not in keywordArray. Please type word")
+        word = input("Keyword not in keywordArray. Please type word")
         pickup(word)
 
 #function used to calibrate HSV values used for color detection
